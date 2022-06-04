@@ -15,3 +15,7 @@ public:
         return res;
     }
 };
+
+
+// O(N)- time
+// O(N)-space
