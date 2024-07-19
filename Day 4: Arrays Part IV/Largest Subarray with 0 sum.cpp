@@ -1,28 +1,17 @@
 class Solution {
-public:
-    int longestConsecutive(vector<int>& nums) {
-        unordered_map<int,bool> m;
-        int n=nums.size();
-        for(int z=0;z<n;z++)
-        {
-            m[nums[z]]=1;
+  public:
+    int maxLen(vector<int>& arr, int n) {
+        map<int,int> m;
+        int sum = 0, res = 0;
+        for(int i=0;i<arr.size();i++){
+            sum+=arr[i];
+            if(sum==0){
+                res = i+1;
+            } else if(m.count(sum)){
+                res = max(res,i-m[sum]);
+            } else m[sum] = i;
         }
-        int ans=0;
-        for(int z=0;z<n;z++)
-        {
-            if(!m[nums[z]-1])
-            {
-                int k=nums[z];
-                int temp=0;
-                while(m[k])
-                {
-                    temp++;
-                    k++;
-                }
-                ans=max(ans,temp);
-            }
-        }
-        return ans;
+        return res;
     }
 };
 
