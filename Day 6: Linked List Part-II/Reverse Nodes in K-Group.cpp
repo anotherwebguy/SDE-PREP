@@ -35,3 +35,52 @@ public:
 
 //O(N)-time
 //O(1)-space
+
+class Solution {
+public:
+    ListNode* getkthNode(ListNode* temp, int k){
+        k--;
+        while(temp!=NULL && k>0){
+            temp = temp->next;
+            k--;
+        }
+        return temp;
+    }
+
+    ListNode* reverseLL(ListNode* temp){
+        ListNode* prev = NULL;
+        ListNode* curr = temp;
+        while(curr!=NULL){
+            ListNode* tp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = tp;
+        }
+        return prev;
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* temp = head;
+        ListNode* prevList = NULL;
+        while(temp!=NULL){
+            ListNode* kthNode = getkthNode(temp,k);
+            if(kthNode==NULL){
+                if(prevList){
+                    prevList->next = temp;
+                }
+                break;
+            }
+            ListNode* nextNode = kthNode->next;
+            kthNode->next = NULL;
+            reverseLL(temp);
+            if(temp==head){
+                head = kthNode;
+            } else {
+                prevList->next = kthNode;
+            }
+            prevList = temp;
+            temp = nextNode;
+        }
+        return head;
+    }
+};
